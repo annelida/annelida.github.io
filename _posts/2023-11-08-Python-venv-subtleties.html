@@ -1,0 +1,272 @@
+---
+layout: post
+title: Python virtual environment
+subtitle: and it's subtleties
+permalink: /python/virtual_env_subtleties.html
+categories: [python, literate programming]
+tags: [tutorial, virtualenv, set-up]
+---
+
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org07da978">What is Python virtual environment</a>
+<ul>
+<li><a href="#orgb73b017">Area of usage</a></li>
+<li><a href="#org2c5d98e">Core features</a></li>
+</ul>
+</li>
+<li><a href="#org018cc85">What is available options:</a>
+<ul>
+<li><a href="#orgc983f9d">Pros&amp;Cons of each approach</a></li>
+</ul>
+</li>
+<li><a href="#orgb049934">Prerequisites</a></li>
+<li><a href="#org6d9bf80">Installation</a></li>
+<li><a href="#org445a9b7">Testing</a>
+<ul>
+<li><a href="#org29e2ead">Tree for pristine <code>venv</code></a></li>
+<li><a href="#org77a9fc8">Size of pristine <code>venv</code> folder</a></li>
+<li><a href="#orgd2b9404">Where packages do install?</a></li>
+<li><a href="#org8d953fe">Using <code>pip</code> for package management</a></li>
+<li><a href="#org7233136"><code>venv</code> tree after installation</a></li>
+<li><a href="#org035c493">Size of <code>venv</code> folder</a></li>
+</ul>
+</li>
+<li><a href="#org4d85b44">Usage</a>
+<ul>
+<li><a href="#org9aa4b14"><code>virutalenv</code></a></li>
+<li><a href="#org1fe9f35"><code>venv</code></a></li>
+</ul>
+</li>
+<li><a href="#orge0abcd3">Usage inside Emacs</a>
+<ul>
+<li><a href="#orge62b4fd">Manual through <code>shell</code> emulator</a></li>
+<li><a href="#orgc5384a2"><code>pyvenv</code></a></li>
+</ul>
+</li>
+<li><a href="#org2186a30">Conclusion</a></li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org07da978" class="outline-2">
+<h2 id="org07da978">What is Python virtual environment</h2>
+<div class="outline-text-2" id="text-org07da978">
+<p>
+A brief description:
+</p>
+
+<blockquote>
+<p>
+The venv module provides support for creating lightweight "virtual
+environments" with <i>their own</i> site directories, optionally isolated
+from system site directories. Each virtual environment has its own
+Python binary (which matches the version of the binary that was used
+to create this environment) and can have its own independent set of
+installed Python packages in its site directories.
+</p>
+</blockquote>
+
+<p>
+In other words ===&gt;
+</p>
+</div>
+
+<div id="outline-container-orgb73b017" class="outline-3">
+<h3 id="orgb73b017">Area of usage</h3>
+</div>
+
+<div id="outline-container-org2c5d98e" class="outline-3">
+<h3 id="org2c5d98e">Core features</h3>
+</div>
+</div>
+
+
+<div id="outline-container-org018cc85" class="outline-2">
+<h2 id="org018cc85">What is available options:</h2>
+<div class="outline-text-2" id="text-org018cc85">
+<ul class="org-ul">
+<li>from sys module <a href="https://docs.python.org/3/library/venv.html">https://docs.python.org/3/library/venv.html</a>;</li>
+<li>from separate <code>virtualenv</code> using utility the third-party:
+<a href="https://pypi.org/project/virtualenv/">https://pypi.org/project/virtualenv/</a>;</li>
+</ul>
+</div>
+
+
+
+<div id="outline-container-orgc983f9d" class="outline-3">
+<h3 id="orgc983f9d">Pros&amp;Cons of each approach</h3>
+</div>
+</div>
+
+
+<div id="outline-container-orgb049934" class="outline-2">
+<h2 id="orgb049934">Prerequisites</h2>
+<div class="outline-text-2" id="text-orgb049934">
+<div class="org-src-container">
+<pre class="src src-sh">  python --version 2&gt;&amp;1
+emacs --version
+</pre>
+</div>
+
+<pre class="example">
+Python 3.9.2
+GNU Emacs 27.1
+Copyright (C) 2020 Free Software Foundation, Inc.
+GNU Emacs comes with ABSOLUTELY NO WARRANTY.
+You may redistribute copies of GNU Emacs
+under the terms of the GNU General Public License.
+For more information about these matters, see the file named COPYING.
+</pre>
+
+
+
+<div class="org-src-container">
+<pre class="src src-emacs-lisp"><span class="linenr">1: </span>(princ (concat
+<span class="linenr">2: </span>		(format "Emacs version: %s\n"
+<span class="linenr">3: </span>			(emacs-version))
+<span class="linenr">4: </span>		(format "org version: %s\n"
+<span class="linenr">5: </span>			(org-version))))
+</pre>
+</div>
+
+<pre class="example">
+Emacs version: GNU Emacs 27.1 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.24, cairo version 1.16.0)
+ of 2023-02-23, modified by Debian
+org version: 9.6.11
+</pre>
+
+
+<p>
+This is the list of already installed <code>pip</code> packages:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">pip list
+</pre>
+</div>
+
+<pre class="example" id="orgd86371e">
+Package           Version
+----------------- --------
+asttokens         2.4.0
+async-generator   1.10
+attrs             23.1.0
+backcall          0.2.0
+certifi           2023.5.7
+decorator         5.1.1
+exceptiongroup    1.1.1
+executing         2.0.0
+h11               0.14.0
+idna              3.4
+ipython           8.17.2
+jedi              0.19.1
+markdown-it-py    3.0.0
+matplotlib-inline 0.1.6
+mdurl             0.1.2
+outcome           1.2.0
+parso             0.8.3
+pexpect           4.8.0
+pickleshare       0.7.5
+pip               23.3.1
+prompt-toolkit    3.0.39
+ptyprocess        0.7.0
+pure-eval         0.2.2
+Pygments          2.16.1
+PySocks           1.7.1
+rich              13.6.0
+selenium          4.10.0
+setuptools        52.0.0
+six               1.16.0
+sniffio           1.3.0
+sortedcontainers  2.4.0
+stack-data        0.6.3
+traitlets         5.11.2
+trio              0.22.0
+trio-websocket    0.10.3
+typing_extensions 4.8.0
+urllib3           2.0.3
+wcwidth           0.2.8
+wheel             0.34.2
+wsproto           1.2.0
+</pre>
+</div>
+</div>
+
+
+<div id="outline-container-org6d9bf80" class="outline-2">
+<h2 id="org6d9bf80">Installation</h2>
+</div>
+
+<div id="outline-container-org445a9b7" class="outline-2">
+<h2 id="org445a9b7">Testing</h2>
+<div class="outline-text-2" id="text-org445a9b7">
+</div>
+<div id="outline-container-org29e2ead" class="outline-3">
+<h3 id="org29e2ead">Tree for pristine <code>venv</code></h3>
+</div>
+
+<div id="outline-container-org77a9fc8" class="outline-3">
+<h3 id="org77a9fc8">Size of pristine <code>venv</code> folder</h3>
+</div>
+
+<div id="outline-container-orgd2b9404" class="outline-3">
+<h3 id="orgd2b9404">Where packages do install?</h3>
+</div>
+
+<div id="outline-container-org8d953fe" class="outline-3">
+<h3 id="org8d953fe">Using <code>pip</code> for package management</h3>
+</div>
+
+<div id="outline-container-org7233136" class="outline-3">
+<h3 id="org7233136"><code>venv</code> tree after installation</h3>
+</div>
+
+<div id="outline-container-org035c493" class="outline-3">
+<h3 id="org035c493">Size of <code>venv</code> folder</h3>
+</div>
+</div>
+
+
+<div id="outline-container-org4d85b44" class="outline-2">
+<h2 id="org4d85b44">Usage</h2>
+<div class="outline-text-2" id="text-org4d85b44">
+</div>
+<div id="outline-container-org9aa4b14" class="outline-3">
+<h3 id="org9aa4b14"><code>virutalenv</code></h3>
+<div class="outline-text-3" id="text-org9aa4b14">
+<p>
+Check the <code>mode</code> area
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1fe9f35" class="outline-3">
+<h3 id="org1fe9f35"><code>venv</code></h3>
+<div class="outline-text-3" id="text-org1fe9f35">
+<p>
+<code>Mode</code> area notification check
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge0abcd3" class="outline-2">
+<h2 id="orge0abcd3">Usage inside Emacs</h2>
+<div class="outline-text-2" id="text-orge0abcd3">
+</div>
+<div id="outline-container-orge62b4fd" class="outline-3">
+<h3 id="orge62b4fd">Manual through <code>shell</code> emulator</h3>
+</div>
+
+<div id="outline-container-orgc5384a2" class="outline-3">
+<h3 id="orgc5384a2"><code>pyvenv</code></h3>
+</div>
+</div>
+
+<div id="outline-container-org2186a30" class="outline-2">
+<h2 id="org2186a30">Conclusion</h2>
+</div>
