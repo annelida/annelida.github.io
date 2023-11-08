@@ -1,0 +1,81 @@
+---
+layout: post
+title: Python virtual environment applying
+permalink: /python/virtual_env.html
+categories: [python, literate programming]
+tags: [tutorial, virtualenv, methodology]
+---
+<p>
+A virtual environment in Python is a separeted directory that contains
+a certain version of the Python interpreter with its own set of
+installed packages.
+
+The virtual environment is used to isolate the project
+from system-wide Python installation and from other projects.
+It is allows to avoid conflicts between packages.
+</p>
+
+<p>
+To install virtual environment Python module venv used.
+Command 'python -m venv venv' will create a directory named 'venv'.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">python -m venv venv
+</pre>
+</div>
+
+<p>
+To activate virtual environment, navigate to the created 
+'venv' and type: 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">cd /home/vikky/venv/
+source bin/activate
+</pre>
+</div>
+
+<p>
+When the virtual environment is activated sys.path generates a list of paths from venv directory only.
+To see it let's create a simple script python_sys.py
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">import sys
+print(sys.path)
+</pre>
+</div>
+
+<p>
+when activate a virtual environment and run the script.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">cd /home/vikky/venv/
+source bin/activate
+python python_sys.py 
+</pre>
+</div>
+<p>
+['/home/vikky/venv', '/usr/lib/python39.zip', '/usr/lib/python3.9',
+'/usr/lib/python3.9/lib-dynload', '/home/vikky/venv/lib/python3.9/site-packages']
+</p>
+
+<p>
+To deactivate the current virtual environment use the command “deactivate”.
+</p>
+
+<p>
+When virtual envoronment is deactivated sys.path will search paths outside venv directory. 
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">import sys
+print(sys.path)
+</pre>
+</div>
+<p>
+'', '<i>usr/lib/python39.zip', '/usr/lib/python3.9', '/usr/lib/python3.9/lib-dynload', '/home/vikky</i>.local/lib/python3.9/site-packages',
+'/usr/local/lib/python3.9/dist-packages', '/usr/lib/python3/dist-packages']
+</p>
