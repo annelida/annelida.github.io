@@ -1,0 +1,186 @@
+---
+layout: post
+title: Mark up with Org-mode and Jekyll
+subtitle: feel and view
+permalink: /blog-mark-up.html
+categories: [emacs, org-mode, mark-up, Literate Programming]
+tags: [html export, mark-up]
+---
+
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#orgdda7114">Emphasis</a>
+<ul>
+<li><a href="#orgc350645">Bold</a></li>
+<li><a href="#org2ca6c6c">Italic</a></li>
+<li><a href="#orgfe70fc0">Underlined</a></li>
+<li><a href="#orgf080db9">Verbatim</a></li>
+<li><a href="#orgd3495b6">Code</a></li>
+<li><a href="#org72578b1">Strike-through</a></li>
+<li><a href="#org1b5580f">Poetry</a></li>
+<li><a href="#org27fe0f8">Quotes</a></li>
+<li><a href="#org11e9ae7">Center</a></li>
+<li><a href="#org8c297a5">The image presentation</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+<a href="https://orgmode.org/manual/Markup-for-Rich-Contents.html">Official documentation</a>
+</p>
+
+<div id="outline-container-orgdda7114" class="outline-2">
+<h2 id="orgdda7114">Emphasis</h2>
+<div class="outline-text-2" id="text-orgdda7114">
+</div>
+<div id="outline-container-orgc350645" class="outline-3">
+<h3 id="orgc350645">Bold</h3>
+<div class="outline-text-3" id="text-orgc350645">
+<pre class="example" id="org998a4ad">
+*Bold text sample*
+</pre>
+<p>
+<b>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+eiusmod tempor incididunt ut labore et dolore magna aliqua.</b>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2ca6c6c" class="outline-3">
+<h3 id="org2ca6c6c">Italic</h3>
+<div class="outline-text-3" id="text-org2ca6c6c">
+<pre class="example" id="org2e34c2c">
+Italic text sample
+</pre>
+<p>
+<i>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+eiusmod tempor incididunt ut labore et dolore magna aliqua.</i>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgfe70fc0" class="outline-3">
+<h3 id="orgfe70fc0">Underlined</h3>
+<div class="outline-text-3" id="text-orgfe70fc0">
+<pre class="example" id="orgbdb1f98">
+__Underlined text there__
+</pre>
+<p>
+__Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+eiusmod tempor incididunt ut labore et dolore magna aliqua.__
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf080db9" class="outline-3">
+<h3 id="orgf080db9">Verbatim</h3>
+<div class="outline-text-3" id="text-orgf080db9">
+<pre class="example" id="org5205ea6">
+=Verbatim sample=
+</pre>
+<p>
+<code>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+eiusmod tempor incididunt ut labore et dolore magna aliqua.</code>
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd3495b6" class="outline-3">
+<h3 id="orgd3495b6">Code</h3>
+<div class="outline-text-3" id="text-orgd3495b6">
+<pre class="example" id="orgd969062">
+~Code sample~
+</pre>
+<p>
+<code>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+eiusmod tempor incididunt ut labore et dolore magna aliqua.</code>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org72578b1" class="outline-3">
+<h3 id="org72578b1">Strike-through</h3>
+<div class="outline-text-3" id="text-org72578b1">
+<pre class="example" id="orgeef9f60">
++Strike-through+
+</pre>
+<p>
+<del>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+eiusmod tempor incididunt ut labore et dolore magna aliqua.</del>
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1b5580f" class="outline-3">
+<h3 id="org1b5580f">Poetry</h3>
+<div class="outline-text-3" id="text-org1b5580f">
+<p>
+To preserve the line breaks, indentation and blank lines in a region,
+but otherwise use normal formatting, you can use this construct, which
+can also be used to format poetry.
+</p>
+
+<pre class="example" id="org3cc8069">
+#+begin_verse
+You’re winning. You simply cannot fail.
+The only obstacle is doubt;
+There’s not a hill you cannot scale
+Once fear is put to rout.
+
+Don’t think defeat, don’t talk defeat,
+The word will rob you of your strength.
+“I will succeed,” This phrase repeat
+Throughout the journey’s length.
+
+            -- Wilhelmina Stitch
+#+end_verse
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org27fe0f8" class="outline-3">
+<h3 id="org27fe0f8">Quotes</h3>
+<div class="outline-text-3" id="text-org27fe0f8">
+<p>
+You can include quotations in Org documents like this:
+</p>
+
+<pre class="example" id="orgb51a464">
+#+begin_quote
+Life begins at the end of your comfort zone.
+                        -- Neale Donald Walsch
+#+end_quote
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org11e9ae7" class="outline-3">
+<h3 id="org11e9ae7">Center</h3>
+<div class="outline-text-3" id="text-org11e9ae7">
+<p>
+If you would like to center some text, do it like this:
+</p>
+<pre class="example" id="org097f037">
+#+begin_center
+If you want something you have never had, you must be \\
+willing to do something you have never done.
+#+end_center
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org8c297a5" class="outline-3">
+<h3 id="org8c297a5">The image presentation</h3>
+<div class="outline-text-3" id="text-org8c297a5">
+
+<div id="org613c55c" class="figure">
+<p><img src="https://annelida.github.io/assets/img/image.jpg" alt="image.jpg" title="Image presentation test" align="right" width="300px" />
+</p>
+<p><span class="figure-number">Figure 1: </span>An image presentation sample</p>
+</div>
+</div>
+</div>
+</div>
