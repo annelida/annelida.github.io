@@ -1,0 +1,180 @@
+---
+layout: page
+title: What is CI/CD?
+permalink: /software-development/CI-CD-conceptions.html
+categories: [Software-development, Software testing]
+tags: [git, python, testing]
+---
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org0053f0c">Preamble</a></li>
+<li><a href="#org7064160">CI definition and tools</a></li>
+<li><a href="#org1ff7cf3">CD definition and tools</a></li>
+<li><a href="#org7945937">Conclusion</a></li>
+</ul>
+</div>
+</div>
+<p>
+<a href="https://www.youtube.com/watch?v=42UP1fxi2SY">Source</a>
+</p>
+
+<div id="outline-container-org0053f0c" class="outline-2">
+<h2 id="org0053f0c">Preamble</h2>
+<div class="outline-text-2" id="text-org0053f0c">
+<p>
+What is CI/CD? How does it help us ship faster? Is it worth the
+hassle? Let’s take a look. CI/CD, or Continuous Integration and
+Continuous Delivery, automates the software development process from
+the initial code commit all the way through to deployment. It
+eliminates much of the manual human intervention traditionally
+required to get new code to production. The CI/CD process takes care
+of building, testing, and deploying new code to production. The
+promise is that it enables software teams to deploy better-quality
+software faster. This all sounds very good, but does it work in real
+life?
+</p>
+
+<p>
+The answer is - it depends. Let’s break up CI/CD into their own parts
+and discuss them separately.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7064160" class="outline-2">
+<h2 id="org7064160">CI definition and tools</h2>
+<div class="outline-text-2" id="text-org7064160">
+<p>
+<b>CI</b> is less controversial and more common.
+</p>
+
+<p>
+In a nutshell, it is the practice of using automation to enable teams
+to merge code changes into the shared repository early and often. Each
+commit triggers an automated workflow on a CI server that runs a
+series of tasks to make sure the commit is safe to merge into the main
+branch. A good CI process relies on a set of good tests.
+</p>
+
+<p>
+It is non-trivial to maintain a set of tests with sufficient coverage
+that is not flakey. High test coverage usually takes longer to
+run. This impacts developer productivity.
+</p>
+
+<p>
+It is a tough balancing act, but it is worth the effort to get it
+right. What are some common tools used in CI? A good source code
+management system is the foundation.
+</p>
+
+<p>
+<b>Github</b> is a very popular example. It should hold everything needed
+to build the software. This includes source code, test scripts, and
+scripts to build the software applications.
+</p>
+
+<p>
+There are many tools to manage the CI process itself. <b>Github Actions</b>
+and <b>Buildkite</b> are some modern examples. <b>Jenkins, CircleCI</b>, and
+<b>TravisCI</b> are also common.
+</p>
+
+<p>
+These tools manage the build and test tasks in CI. There are many test
+tools for writing and running tests. These tools are usually language
+and ecosystem specific.
+</p>
+
+<p>
+For example, for JS, <b>Jest</b> is an example of the unit testing
+framework, while playwright and cypress are some common integration
+testing frameworks for web applications. The build tools are even more
+diverse and ecosystem specific. <b>Gradle</b> is a powerful build tool for
+Java.
+</p>
+
+<p>
+The Javascript build ecosystem is fragmented and hard to keep track
+of. <b>Webpack</b> is the standard, but many new build tools claim to be
+much faster, but they are not yet as extensible as webpack.
+</p>
+
+<p>
+Now let’s examine the CD part of CI/CD.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1ff7cf3" class="outline-2">
+<h2 id="org1ff7cf3">CD definition and tools</h2>
+<div class="outline-text-2" id="text-org1ff7cf3">
+<p>
+<b>CD</b> is continuous deployment. If we are being truthful, real
+continuous deployment is hard. They do exist, but the practice is not
+as common as CI.
+</p>
+
+<p>
+Many teams only practice CD on the most basic types of systems. These
+systems are usually stateless, like the API or web server tiers. With
+good production monitoring, these systems could be deployed
+continuously with minimal risks.
+</p>
+
+<p>
+They are stateless, and rollbacks are usually quick and harmless. It
+is also a common practice to wrap new features in feature flags to
+separate The deployment of the code from the activation of the
+features. This allows the team to quickly shut off new features if
+they cause any issues without requiring a full rollback.
+</p>
+
+<p>
+Canary deployment is also a common practice for products with hundreds
+of millions of users. It deploys the new production code to a tiny
+subset of the power users and staff who both appreciate new features
+and have the risk appetite to help catch problems before the new code
+is deployed widely. This allows the team to test the new code in a
+real-world environment while limiting the blast radius if something
+goes wrong.
+</p>
+
+<p>
+These techniques work well for simple stateless systems. On the other
+hand, very few teams have the resources or the convictions to
+implement real continuous, hands-off deployment on complex stateful
+systems Like database backend clusters or other types of stateful
+systems like a websocket cluster. Instead, these systems are usually
+on a fixed deploy cadence.
+</p>
+
+<p>
+The deployment process is manual, risky and time consuming. They
+require the care of a dedicated platform team. It is rare to see these
+systems deploy fully continuously and automatically.
+</p>
+
+<p>
+What are some tools that are used for CD? The tools we mentioned
+earlier like <b>Github Actions, Buildkite</b> and <b>Jenkins</b> are commonly
+used to handle CD tasks. There are also infrastructure-specific tools
+that make CD easier to maintain. For example, on <b>Kubernetes, ArgoCD</b>
+is popular.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7945937" class="outline-2">
+<h2 id="org7945937">Conclusion</h2>
+<div class="outline-text-2" id="text-org7945937">
+<p>
+In conclusion, CI/CD is a powerful software development practice that
+can help teams ship better-quality software faster. However, it's not
+a one-size-fits-all solution and its implementation may vary depending
+on the complexity of the system.
+</p>
+</div>
+</div>
