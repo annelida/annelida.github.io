@@ -8,8 +8,8 @@ highlighter: rouge
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
 #
-title : Software testing using Python and Selenium
-tagline: Python, Selenium, Emacs
+# title : 
+# tagline: Python, Selenium, Emacs
 author :
   name : Viktoriia Kosinova
   email : viqsiq@gmail.com
