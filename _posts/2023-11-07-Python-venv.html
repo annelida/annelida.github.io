@@ -1,44 +1,119 @@
----
+<div class="HTML" id="org61c75df">
+<p>
+&#x2014;
 layout: post
-title: Python virtual environment applying
+title: Python virtual environment
+tagline: " at glance"
 permalink: /python/virtual_env.html
 categories: [python, literate programming]
 tags: [tutorial, virtualenv, methodology]
----
-<p>
-A virtual environment in Python is a separeted directory that contains
-a certain version of the Python interpreter with its own set of
-installed packages.
+&#x2014;
+</p>
 
-The virtual environment is used to isolate the project
-from system-wide Python installation and from other projects.
-It is allows to avoid conflicts between packages.
+</div>
+
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org02019b3">Preamble</a>
+<ul>
+<li><a href="#org41b585d">Virtual Environment: Purpose and Intention</a></li>
+<li><a href="#org41e74f5">PIP</a></li>
+<li><a href="#orgc471646">SYS.PATH != $PYTHONPATH</a></li>
+<li><a href="#orgf27f70f">The main utility is</a></li>
+</ul>
+</li>
+<li><a href="#org9115eb5">Create the first one <code>venv</code>:</a></li>
+<li><a href="#org42622c6">Activate <code>venv</code> Inside Emacs:</a></li>
+<li><a href="#orgfe9e893">Check-up List of Packages:</a></li>
+<li><a href="#org74a8b48">Check-up Theirs Folders:</a></li>
+<li><a href="#org122e5cd">Deactivate <code>venv</code> Inside Emacs:</a></li>
+<li><a href="#orgbb8c19b">How will bee looks <code>sys.path</code> when <code>venv</code> activated</a></li>
+<li><a href="#org3b14caf">Conclusion:</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org02019b3" class="outline-2">
+<h2 id="org02019b3">Preamble</h2>
+<div class="outline-text-2" id="text-org02019b3">
+</div>
+<div id="outline-container-org41b585d" class="outline-3">
+<h3 id="org41b585d">Virtual Environment: Purpose and Intention</h3>
+<div class="outline-text-3" id="text-org41b585d">
+<p>
+A <b>Python Virtual Environment</b> is an isolated space where you can work
+on your Python projects, separately from your system-installed
+Python. You can set up your own libraries and dependencies without
+affecting the system Python.
 </p>
 
 <p>
-To install virtual environment Python module venv used.
-Command 'python -m venv venv' will create a directory named 'venv'.
+The purpose of the Virtual environment is creation an isolated from
+the main operating system set of libraries that allow reproduce itself
+on other workstations and execute Python code in the same environment.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org41e74f5" class="outline-3">
+<h3 id="org41e74f5">PIP</h3>
+<div class="outline-text-3" id="text-org41e74f5">
+<p>
+The name pip is [an] acronym and declaration: <i>pip installs packages</i>.
+</p>
+
+<p>
+PIP is a package-management system written in Python and is used to
+install and manage software packages.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">python -m venv venv
+<pre class="src src-sh">pip --version
 </pre>
 </div>
 
 <p>
-To activate virtual environment, navigate to the created 
-'venv' and type: 
+Obviosly that the system wide packages for Python located in
+in <i>usr/lib/python3</i>
+</p>
+
+<p>
+But Python itself in another folder
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">cd /home/vikky/venv/
-source bin/activate
+<pre class="src src-sh">which python3
 </pre>
 </div>
 
 <p>
-When the virtual environment is activated sys.path generates a list of paths from venv directory only.
-To see it let's create a simple script python_sys.py
+Now we already has a list of pre-installed and ready to use Python
+packages:
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">pip list
+</pre>
+</div>
+
+<p>
+Without using VENV all packages that PIP installed are located in the
+folder <i>usr/lib/python3/dist-packages</i>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">tree -L 1 /usr/lib/python3/dist-packages/
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc471646" class="outline-3">
+<h3 id="orgc471646">SYS.PATH != $PYTHONPATH</h3>
+<div class="outline-text-3" id="text-orgc471646">
+<p>
+Check up pristine <code>sys.path</code>:
 </p>
 
 <div class="org-src-container">
@@ -46,28 +121,101 @@ To see it let's create a simple script python_sys.py
 print(sys.path)
 </pre>
 </div>
+</div>
+</div>
 
+<div id="outline-container-orgf27f70f" class="outline-3">
+<h3 id="orgf27f70f">The main utility is</h3>
+<div class="outline-text-3" id="text-orgf27f70f">
 <p>
-when activate a virtual environment and run the script.
+Yes, it's possible to do it via <code>python3 -m venv</code>, but:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">cd /home/vikky/venv/
-source bin/activate
-python python_sys.py 
+<pre class="src src-sh">virtualenv --version
 </pre>
 </div>
-<p>
-['/home/vikky/venv', '/usr/lib/python39.zip', '/usr/lib/python3.9',
-'/usr/lib/python3.9/lib-dynload', '/home/vikky/venv/lib/python3.9/site-packages']
-</p>
 
 <p>
-To deactivate the current virtual environment use the command “deactivate”.
+It's already installed into the system.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9115eb5" class="outline-2">
+<h2 id="org9115eb5">Create the first one <code>venv</code>:</h2>
+<div class="outline-text-2" id="text-org9115eb5">
+<p>
+For sake of convenience lets create the folder for all <code>user</code>
+<i>virtualenvironments</i>:
 </p>
 
+
+<div class="org-src-container">
+<pre class="src src-sh">mkdir ~/.local/venvs
+ls -la ~/.local/
+</pre>
+</div>
+
 <p>
-When virtual envoronment is deactivated sys.path will search paths outside venv directory. 
+Now it's time to create our first <code>venv</code> inside this folder using
+Debian-native <code>virtualenv</code> :
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">virtualenv ~/.local/venvs/ViEnv0.1
+ls ~/.local/venvs
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org42622c6" class="outline-2">
+<h2 id="org42622c6">Activate <code>venv</code> Inside Emacs:</h2>
+<div class="outline-text-2" id="text-org42622c6">
+<div class="org-src-container">
+<pre class="src src-elisp">(pyvenv-activate "~/.local/venvs/ViEnv0.1")
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfe9e893" class="outline-2">
+<h2 id="orgfe9e893">Check-up List of Packages:</h2>
+<div class="outline-text-2" id="text-orgfe9e893">
+<div class="org-src-container">
+<pre class="src src-sh">pip list
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org74a8b48" class="outline-2">
+<h2 id="org74a8b48">Check-up Theirs Folders:</h2>
+<div class="outline-text-2" id="text-org74a8b48">
+<div class="org-src-container">
+<pre class="src src-sh">tree -L 1 ~/.local/venvs/ViEnv0.1/bin/
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org122e5cd" class="outline-2">
+<h2 id="org122e5cd">Deactivate <code>venv</code> Inside Emacs:</h2>
+<div class="outline-text-2" id="text-org122e5cd">
+<div class="org-src-container">
+<pre class="src src-elisp">(pyvenv-deactivate)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbb8c19b" class="outline-2">
+<h2 id="orgbb8c19b">How will bee looks <code>sys.path</code> when <code>venv</code> activated</h2>
+<div class="outline-text-2" id="text-orgbb8c19b">
+<p>
+When <code>venv</code> is not activated
 </p>
 
 <div class="org-src-container">
@@ -76,6 +224,63 @@ print(sys.path)
 </pre>
 </div>
 <p>
-'', '<i>usr/lib/python39.zip', '/usr/lib/python3.9', '/usr/lib/python3.9/lib-dynload', '/home/vikky</i>.local/lib/python3.9/site-packages',
-'/usr/local/lib/python3.9/dist-packages', '/usr/lib/python3/dist-packages']
+'/usr/lib/python3/dist-packages', '/usr/lib/python3.11/dist-packages']
 </p>
+
+<p>
+When <code>venv</code> is activated
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python">import sys
+print(sys.path)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3b14caf" class="outline-2">
+<h2 id="org3b14caf">Conclusion:</h2>
+<div class="outline-text-2" id="text-org3b14caf">
+<p>
+The benefits of using virtual environments in Python projects are
+numerous and essential for efficient and organized development
+processes. Some key advantages include:
+</p>
+
+<ul class="org-ul">
+<li>Dependency Isolation: Virtual environments ensure that packages
+installed for one project do not interfere with those installed for
+others, preventing version conflicts and ensuring the correct
+package versions are used;</li>
+
+<li>Reproducibility: Virtual environments specify exact package versions
+used in a project, making it easier for other developers to recreate
+the same environment and ensure consistent behavior;</li>
+
+<li><p>
+Project Portability: Virtual environments can be easily moved or
+copied to different machines, enabling developers to work on the
+same project in different environments without worrying about
+package installation or dependency issues;
+</p>
+
+<p>
+In summary, virtual environments in Python offer a structured and
+efficient way to manage dependencies, ensure reproducibility,
+simplify collaboration, and maintain a clean and stable development
+environment.
+</p>
+
+<p>
+The main widely using ways to install and use Python virtual
+environments are:
+</p>
+
+<ul class="org-ul">
+<li>Using the <code>venv</code> module;</li>
+<li>Using <code>virtualenv</code>.</li>
+</ul></li>
+</ul>
+</div>
+</div>
