@@ -1,0 +1,171 @@
+---
+layout: page
+title: SSH connection to a remote host in Linux
+tagline: " how it works"
+permalink: /linux/debian/SSH-connection.html
+categories: [Linux, Debian12, SSH]
+tags: [Linux, Debian12, ssh]
+---
+
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org5810074">Introduction</a></li>
+<li><a href="#org3e0201c">Prerequisites</a></li>
+<li><a href="#orga2d0654">How to Connect via SSH</a></li>
+<li><a href="#orga7cd7ed">How to verify that SSH server is running</a></li>
+<li><a href="#orgcbf1070">How to run SSH server</a></li>
+<li><a href="#orgdc6452f">SSH port</a></li>
+<li><a href="#org31bf484">Notes</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org5810074" class="outline-2">
+<h2 id="org5810074">Introduction</h2>
+<div class="outline-text-2" id="text-org5810074">
+<p>
+<b>ssh (SSH client)</b> is a program for logging into a remote machine and
+for executing commands on a remote machine. It is intended to provide
+secure encrypted communications between two untrusted hosts over an
+insecure network.
+</p>
+
+<p>
+SSH works by connecting a client program to an SSH server, called
+<b>sshd</b>.
+</p>
+
+<p>
+<b>sshd (OpenSSH Daemon)</b> is the daemon program for ssh. It provides
+secure encrypted communications between two untrusted hosts over an
+insecure network.
+</p>
+
+<p>
+When a secure SSH connection is established, a shell session
+starts. It enables manipulating the remote machine (server) by typing
+commands within the client on your local computer.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-org3e0201c" class="outline-2">
+<h2 id="org3e0201c">Prerequisites</h2>
+<div class="outline-text-2" id="text-org3e0201c">
+<ul class="org-ul">
+<li>The remote computer must be turned on and have a network connection;</li>
+<li>The SSHd program must be running;</li>
+<li><p>
+You must to know the IP address or the name of the remote machine:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">hostname
+hostname -I
+</pre>
+</div>
+
+<pre class="example">
+Dell
+192.168.43.143 
+</pre></li>
+
+<li>You must to have permission to access the remote computer;</li>
+<li>You must to know user's name and password for logging.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orga2d0654" class="outline-2">
+<h2 id="orga2d0654">How to Connect via SSH</h2>
+<div class="outline-text-2" id="text-orga2d0654">
+<div class="org-src-container">
+<pre class="src src-sh">ssh UserName@IPAddressOrHostname
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga7cd7ed" class="outline-2">
+<h2 id="orga7cd7ed">How to verify that SSH server is running</h2>
+<div class="outline-text-2" id="text-orga7cd7ed">
+<div class="org-src-container">
+<pre class="src src-sh">ps -aux | grep sshd
+</pre>
+</div>
+
+<pre class="example">
+root     1399815  0.0  0.0  15412  6008 ?        Ss   Apr13   0:00 sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups
+root     1665139  0.0  0.0  17448  9472 ?        Ss   09:10   0:00 sshd: alioth [priv]
+alioth   1665192  0.0  0.0  17708  6004 ?        S    09:10   0:00 sshd: alioth@pts/13
+vikky    1680968  0.0  0.0   6472  2036 ?        S    17:14   0:00 grep sshd
+</pre>
+
+
+<p>
+or
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">systemctl status ssh
+</pre>
+</div>
+
+<pre class="example" id="orga07211e">
+● ssh.service - OpenBSD Secure Shell server
+     Loaded: loaded (/lib/systemd/system/ssh.service; enabled; preset: enabled)
+     Active: active (running) since Sat 2024-04-13 09:11:52 IST; 6 days ago
+       Docs: man:sshd(8)
+             man:sshd_config(5)
+    Process: 1399812 ExecStartPre=/usr/sbin/sshd -t (code=exited, status=0/SUCCESS)
+   Main PID: 1399815 (sshd)
+      Tasks: 1 (limit: 18688)
+     Memory: 4.2M
+        CPU: 184ms
+     CGroup: /system.slice/ssh.service
+             └─1399815 "sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups"
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgcbf1070" class="outline-2">
+<h2 id="orgcbf1070">How to run SSH server</h2>
+<div class="outline-text-2" id="text-orgcbf1070">
+<p>
+The process needed to start an SSH server depends from the
+distribution of Linux that you are using. In Debian12 you can manually
+start it by running:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">sudo service ssh start
+</pre>
+</div>
+
+<p>
+To stop the SSH host server, enter the following:
+</p>
+
+<pre class="example">
+sudo service ssh stop
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgdc6452f" class="outline-2">
+<h2 id="orgdc6452f">SSH port</h2>
+<div class="outline-text-2" id="text-orgdc6452f">
+<p>
+SSH, by default, is configured to use port 22 for remote
+communication. Note that it’s possible to configure a different port
+for SSH.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org31bf484" class="outline-2">
+<h2 id="org31bf484">Notes</h2>
+</div>
