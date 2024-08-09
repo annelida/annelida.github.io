@@ -1,7 +1,7 @@
 ---
 layout: page
-title: SSH connection to a remote host in Linux
-tagline: " how it works"
+title: SSH Connection to Remote Linux Hosts
+tagline: " connect easily and securely"
 permalink: /linux/debian/SSH-connection.html
 categories: [Linux, Debian12, SSH]
 tags: [Linux, Debian12, ssh]
@@ -12,11 +12,21 @@ tags: [Linux, Debian12, ssh]
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
 <li><a href="#org5810074">Introduction</a></li>
+<li><a href="#org3d38887">Components of SSH</a></li>
 <li><a href="#org3e0201c">Prerequisites</a></li>
-<li><a href="#orga2d0654">How to Connect via SSH</a></li>
 <li><a href="#orga7cd7ed">How to verify that SSH server is running</a></li>
 <li><a href="#orgcbf1070">How to run SSH server</a></li>
-<li><a href="#orgdc6452f">SSH port</a></li>
+<li><a href="#orgd9ff1c8">How SSH Clients and Servers Interact</a>
+<ul>
+<li><a href="#org738494c">Establishing a Connection</a></li>
+<li><a href="#orgf832359">Server Response</a></li>
+<li><a href="#orgdc177de">Authentication</a></li>
+<li><a href="#org259cb91">Secure Channel Setup</a></li>
+<li><a href="#org89ed9c7">Interactive Session</a></li>
+<li><a href="#org65f8d3b">Ending the Session</a></li>
+</ul>
+</li>
+<li><a href="#org93bea4c">Conclusion</a></li>
 </ul>
 </div>
 </div>
@@ -25,21 +35,32 @@ tags: [Linux, Debian12, ssh]
 <h2 id="org5810074">Introduction</h2>
 <div class="outline-text-2" id="text-org5810074">
 <p>
-<b>ssh (SSH client)</b> is a program for logging into a remote machine and
-for executing commands on a remote machine. It is intended to provide
-secure encrypted communications between two untrusted hosts over an
-insecure network.
+SSH (Secure Shell) is a protocol used to securely connect to remote
+servers or systems over a network. It provides a secure channel for
+communication, allowing users to execute commands, transfer files, and
+manage systems remotely while ensuring confidentiality and
+integrity. In this article, there is a detailed breakdown of how SSH
+connections work in Linux.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3d38887" class="outline-2">
+<h2 id="org3d38887">Components of SSH</h2>
+<div class="outline-text-2" id="text-org3d38887">
+<p>
+The SSH architecture consists of two main components: the <b>SSH client</b>
+and the <b>SSH server</b>.
 </p>
 
 <p>
-SSH works by connecting a client program to an SSH server, called
-<b>sshd</b>.
+<b>SSH client</b> is a program running on the user's local machine that
+initiates the connection to a remote server.
 </p>
 
 <p>
-<b>sshd (OpenSSH Daemon)</b> is the daemon program for ssh. It provides
-secure encrypted communications between two untrusted hosts over an
-insecure network.
+<b>SSH Server</b> is a program running on the remote machine that listens
+and accepts incoming SSH connections from clients.
 </p>
 
 <p>
@@ -50,15 +71,15 @@ commands within the client on your local computer.
 </div>
 </div>
 
-
 <div id="outline-container-org3e0201c" class="outline-2">
 <h2 id="org3e0201c">Prerequisites</h2>
 <div class="outline-text-2" id="text-org3e0201c">
 <ul class="org-ul">
-<li>The remote computer must be turned on and have a network connection;</li>
-<li>The SSHd program must be running;</li>
+<li>The remote computer must be turned on and have a network connection,
+typically the Internet;</li>
+<li>The SSH Server must be running;</li>
 <li><p>
-You must to know the IP address or the name of the remote machine:
+User must to know the IP address or the name of the remote machine:
 </p>
 
 <div class="org-src-container">
@@ -69,22 +90,12 @@ hostname -I
 
 <pre class="example">
 Dell
-192.168.43.143 
+192.168.43.143
 </pre></li>
 
-<li>You must to have permission to access the remote computer;</li>
-<li>You must to know user's name and password for logging.</li>
+<li>User must have permission to access the remote computer;</li>
+<li>The user must know their name and password for logging in.</li>
 </ul>
-</div>
-</div>
-
-<div id="outline-container-orga2d0654" class="outline-2">
-<h2 id="orga2d0654">How to Connect via SSH</h2>
-<div class="outline-text-2" id="text-orga2d0654">
-<div class="org-src-container">
-<pre class="src src-sh">ssh UserName@IPAddressOrHostname
-</pre>
-</div>
 </div>
 </div>
 
@@ -113,7 +124,7 @@ or
 </pre>
 </div>
 
-<pre class="example" id="org77218b8">
+<pre class="example" id="org6a1e7a5">
 ● ssh.service - OpenBSD Secure Shell server
      Loaded: loaded (/lib/systemd/system/ssh.service; enabled; preset: enabled)
      Active: active (running) since Sat 2024-04-13 09:11:52 IST; 6 days ago
@@ -140,6 +151,15 @@ start it by running:
 </p>
 
 <div class="org-src-container">
+<pre class="src src-sh">sudo systemctl start sshd
+</pre>
+</div>
+
+<p>
+or
+</p>
+
+<div class="org-src-container">
 <pre class="src src-sh">sudo service ssh start
 </pre>
 </div>
@@ -148,19 +168,150 @@ start it by running:
 To stop the SSH host server, enter the following:
 </p>
 
+<div class="org-src-container">
+<pre class="src src-sh">sudo systemctl stop sshd
+</pre>
+</div>
+
 <pre class="example">
 sudo service ssh stop
 </pre>
 </div>
 </div>
 
-<div id="outline-container-orgdc6452f" class="outline-2">
-<h2 id="orgdc6452f">SSH port</h2>
-<div class="outline-text-2" id="text-orgdc6452f">
+<div id="outline-container-orgd9ff1c8" class="outline-2">
+<h2 id="orgd9ff1c8">How SSH Clients and Servers Interact</h2>
+<div class="outline-text-2" id="text-orgd9ff1c8">
+</div>
+<div id="outline-container-org738494c" class="outline-3">
+<h3 id="org738494c">Establishing a Connection</h3>
+<div class="outline-text-3" id="text-org738494c">
 <p>
-SSH, by default, is configured to use port 22 for remote
-communication. Note that it’s possible to configure a different port
-for SSH.
+The user initiates an SSH connection from their terminal
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">ssh UserName@remote_host
+</pre>
+</div>
+
+<p>
+Here, `username` is the account you want to log into, and
+`remote_host` is the IP address or hostname of the remote server.
+</p>
+
+<p>
+The SSH client attempts to connect to the remote server via TCP on
+port <b><b>22</b></b> (the default port for SSH).
+</p>
+
+<p>
+You can check which port SSH is listening on:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">grep -i port /etc/ssh/sshd_config
+</pre>
+</div>
+
+<pre class="example">
+Port 22
+#GatewayPorts no
+</pre>
+
+
+<p>
+If you want to specify a different port, you can use the `-p` option:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">ssh -p 2222 username@remote_host
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf832359" class="outline-3">
+<h3 id="orgf832359">Server Response</h3>
+<div class="outline-text-3" id="text-orgf832359">
+<p>
+The SSH server responds to the connection request. It sends its public
+key to the client for verification the server’s identity and confirm
+that the client is connecting to the intended server. The client will
+typically store the server's public key in a file called
+`known_hosts`, allowing it to recognize the server in future
+connections.
+</p>
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #e5786d;">cd</span> ~/.ssh
+ls
+</pre>
+</div>
+
+<pre class="example">
+id_ed25519
+id_ed25519.pub
+known_hosts
+known_hosts.old
+</pre>
+</div>
+</div>
+
+<div id="outline-container-orgdc177de" class="outline-3">
+<h3 id="orgdc177de">Authentication</h3>
+<div class="outline-text-3" id="text-orgdc177de">
+<p>
+The client either prompts the user for a password or uses
+public/private key authentication. If using keys, the client sends a
+request to the server to authenticate using its private key.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org259cb91" class="outline-3">
+<h3 id="org259cb91">Secure Channel Setup</h3>
+<div class="outline-text-3" id="text-org259cb91">
+<p>
+Once authentication is successful, a secure encrypted channel is
+established for communication.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org89ed9c7" class="outline-3">
+<h3 id="org89ed9c7">Interactive Session</h3>
+<div class="outline-text-3" id="text-org89ed9c7">
+<p>
+The user can now execute commands on the remote server and transfer
+files securely over the established SSH session.  For example, running
+`ls` will list directories on the remote server instead of the local
+machine.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org65f8d3b" class="outline-3">
+<h3 id="org65f8d3b">Ending the Session</h3>
+<div class="outline-text-3" id="text-org65f8d3b">
+<p>
+When the user is done, they can log out by typing `exit` or closing
+the terminal window.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org93bea4c" class="outline-2">
+<h2 id="org93bea4c">Conclusion</h2>
+<div class="outline-text-2" id="text-org93bea4c">
+<p>
+SSH (Secure Shell) is a powerful tool for secure remote access in
+Linux systems. It encrypts connections and provides secure
+authentication methods, allowing for the safe management of remote
+systems. Understanding how SSH functions—particularly the initiation
+of sessions and key-based authentication—is essential for effective
+Linux administration. Gaining this knowledge not only enhances
+security but also improves the efficiency of managing remote servers.
 </p>
 </div>
 </div>
